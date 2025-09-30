@@ -5,10 +5,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                env
-                find .
-                pwd
-                ls
+                sh 'env'
+                sh 'find .'
+                sh 'pwd'
+                sh 'ls'
             }
         }
         stage('Plan') {
