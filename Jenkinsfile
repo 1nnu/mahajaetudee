@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Building...'
+                echo 'Test webhook...'
             }
         }
         stage('Plan') {
