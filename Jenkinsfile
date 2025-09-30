@@ -5,7 +5,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Building...'
+                env
+                find .
+                pwd
+                ls
             }
         }
         stage('Plan') {
