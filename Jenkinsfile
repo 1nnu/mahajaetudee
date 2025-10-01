@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Deploy') {
             environment {
-                TF_VAR_HETZNER_API_TOKEN = credentials('hetzner_token')
+                TF_VAR_HETZNER_API_TOKEN = credentials('HETZNER_API_TOKEN')
             }
             steps {
                 sh '''
