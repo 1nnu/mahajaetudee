@@ -17,9 +17,10 @@ pipeline {
             }
             steps {
                 sh '''
-                    sudo apt-get update && sudo apt-get install -y wget unzip
-                    wget https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_linux_amd64.zip
-                    unzip terraform_1.13.3_linux_amd64.zip -d /usr/local/bin
+                    if [ ! -f "/usr/local/bin/terraform"]; then 
+                        wget https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_linux_amd64.zip
+                        unzip terraform_1.13.3_linux_amd64.zip -d /usr/local/bin
+                    fi
                     terraform -v
                     echo $TF_VAR_HETZNER_API_TOKEN
                 '''
