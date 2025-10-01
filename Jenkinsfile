@@ -17,10 +17,10 @@ pipeline {
             }
             steps {
                 sh '''
-                    if ! [ -f "/usr/local/bin/terraform"]; then 
+                    if ! [ -f "/usr/bin/terraform"]; then 
                         rm terraform_1.13.3_linux_amd64.zip
                         wget https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_linux_amd64.zip
-                        unzip terraform_1.13.3_linux_amd64.zip -d /usr/local/bin
+                        unzip terraform_1.13.3_linux_amd64.zip -d /usr/bin
                     fi
                     terraform -v
                     echo $TF_VAR_HETZNER_API_TOKEN
