@@ -17,7 +17,7 @@ locals {
 
 
 
-variable "hetzner_api_token" {
+variable "HETZNER_API_TOKEN" {
   type        = string
   sensitive   = true
 }

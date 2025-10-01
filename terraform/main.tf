@@ -8,7 +8,7 @@ resource "hcloud_primary_ip" "application_ip" {
 
 resource "hcloud_ssh_key" "main" {
   name       = "main-ssh-key"
-  public_key = file("./id_ed25519.pub")
+  public_key = file("./public.pub")
 }
 
 

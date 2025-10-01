@@ -18,5 +18,5 @@ provider "aws" {
 }
 
 provider "hcloud" {
-  token = var.hetzner_api_token
+  token = var.HETZNER_API_TOKEN
 }

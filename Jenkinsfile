@@ -3,7 +3,7 @@ pipeline {
         label 'agent1'
     }
     stages {
-        stage('Checkout') {
+        stage('Print env') {
             steps {
                 sh 'env'
                 sh 'find .'
@@ -11,14 +11,24 @@ pipeline {
                 sh 'ls'
             }
         }
-        stage('Plan') {
+        stage('Deploy') {
+            environment {
+                TF_VAR_HETZNER_API_TOKEN = credentials('hetzner_token')
+            }
             steps {
-                echo 'Testing...'
+                sh '''
+                    sudo apt-get update && sudo apt-get install -y wget unzip
+                    wget https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_linux_amd64.zip
+                    unzip terraform_1.13.3_linux_amd64.zip
+                    sudo mv terraform /usr/local/bin/
+                    terraform -v
+                    echo $TF_VAR_HETZNER_API_TOKEN
+                '''
             }
         }
-        stage('Apply') {
+        stage('Configure') {
             steps {
-                echo 'Deploying...'
+                echo 'Ansible will run now...'
             }
         }
     }
