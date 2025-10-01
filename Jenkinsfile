@@ -18,6 +18,7 @@ pipeline {
             steps {
                 sh '''
                     if ! [ -f "/usr/local/bin/terraform"]; then 
+                        rm terraform_1.13.3_linux_amd64.zip
                         wget https://releases.hashicorp.com/terraform/1.13.3/terraform_1.13.3_linux_amd64.zip
                         unzip terraform_1.13.3_linux_amd64.zip -d /usr/local/bin
                     fi
