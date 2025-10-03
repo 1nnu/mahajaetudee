@@ -1,0 +1,23 @@
+- name: Initial setup
+  hosts: all
+  remote_user: root
+  roles:
+    - init
+  tags: init
+  gather_facts: true
+
+- hosts: _node_type_application
+  tasks:
+    - name: Update packages on public node
+      apt:
+        name: htop
+        state: present
+      become: yes
+
+- hosts: _node_type_db
+  tasks:
+    - name: Update packages on private node
+      apt:
+        name: htop
+        state: present
+      become: yes

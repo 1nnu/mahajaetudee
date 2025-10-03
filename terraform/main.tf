@@ -55,7 +55,17 @@ resource "hcloud_server" "db_node" {
     ip         = "192.168.0.5"
   }
 
+  public_net {
+    ipv4_enabled = false
+    ipv6_enabled = false
+  }
+
   depends_on = [
     hcloud_network_subnet.subnet-a
   ]
+}
+
+output "bastion_ip" {
+  description = "Public IP of the application host"
+  value       = hcloud_server.application_node.ipv4_address
 }
