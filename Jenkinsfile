@@ -56,17 +56,18 @@ pipeline {
             steps {
                 dir('ansible') {
                     withCredentials([sshUserPrivateKey(credentialsId: "private-key-hetzner", keyFileVariable: 'SSH_KEY')]) {
-                        sh '''
-
-                            ansible-inventory -i inventory --list
-
-                            ssh-keygen -R $BASTION_IP || true
-                            
-                            ansible-playbook -i inventory playbook.yaml \
-                            --private-key $SSH_KEY \
-                            --extra-vars "BASTION_IP=$BASTION_IP" \
-                            -vv
-                        '''
+                        // For debug purposes
+                        // ansible-inventory -i inventory --list
+                        
+                        // ansible-playbook -i inventory playbook.yaml \
+                        // --private-key $SSH_KEY \
+                        // --extra-vars "BASTION_IP=$BASTION_IP" \
+                        // -vv
+                        ansiblePlaybook(
+                            playbook: 'playbook.yaml',
+                            inventory: 'inventory',
+                            credentialsId: 'SSH_KEY',
+                            extras: "-e BASTION_IP=$BASTION_IP")
                     }
                 }
             }
