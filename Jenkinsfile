@@ -66,7 +66,7 @@ pipeline {
                         ansiblePlaybook(
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
-                            credentialsId: 'SSH_KEY',
+                            credentialsId: 'private-key-hetzner',
                             extras: "-e BASTION_IP=$BASTION_IP")
                     }
                 }
