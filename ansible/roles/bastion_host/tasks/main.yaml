@@ -1,0 +1,27 @@
+- ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    state: present
+
+- name: Install iptables-persistent
+  ansible.builtin.apt:
+    name: iptables-persistent
+    state: present
+    update_cache: yes
+  vars:
+    ansible_debian_frontend: noninteractive
+
+- name: Add iptables MASQUERADE rule for private network
+  ansible.builtin.shell:
+    cmd: iptables -t nat -C POSTROUTING -s 192.168.0.0/28 -o "{{ ansible_default_ipv4.interface }}" -j MASQUERADE
+  register: has_rule
+  ignore_errors: true
+
+- name: Create MASQUERADE rule if missing
+  ansible.builtin.shell:
+    cmd: iptables -t nat -A POSTROUTING -s 192.168.0.0/28 -o "{{ ansible_default_ipv4.interface }}" -j MASQUERADE
+  when: has_rule.rc != 0
+
+- name: Save iptables rules
+  ansible.builtin.shell:
+    cmd: iptables-save > /etc/iptables/rules.v4

@@ -59,15 +59,14 @@ pipeline {
                         // For debug purposes
                         // ansible-inventory -i inventory --list
                         
-                        // ansible-playbook -i inventory playbook.yaml \
-                        // --private-key $SSH_KEY \
-                        // --extra-vars "BASTION_IP=$BASTION_IP" \
-                        // -vv
                         ansiblePlaybook(
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
                             credentialsId: 'private-key-hetzner',
-                            extras: "-e BASTION_IP=$BASTION_IP")
+                            extraVars{
+                                extraVar("BASTION_IP", "$BASTION_IP", false)
+                                extraVar("ansible_ssh_private_key_file", "$SSH_KEY", true)
+                            })
                     }
                 }
             }

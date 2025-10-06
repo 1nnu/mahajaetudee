@@ -37,6 +37,25 @@ resource "hcloud_server" "application_node" {
   depends_on = [
     hcloud_network_subnet.subnet-a
   ]
+
+  user_data = <<EOD
+#cloud-config
+network:
+  version: 2
+  ethernets:
+    enp7s0:
+      dhcp4: false
+      addresses:
+        - 192.168.0.4/28
+      nameservers:
+        addresses: [8.8.8.8]
+runcmd:
+  - echo 1 > /proc/sys/net/ipv4/ip_forward
+  - iptables -t nat -A POSTROUTING -s 192.168.0.0/28 -o eth0 -j MASQUERADE
+  - iptables -A FORWARD -i eth0 -o enp7s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+  - iptables -A FORWARD -i enp7s0 -o eth0 -j ACCEPT
+EOD
+
 }
 
 resource "hcloud_server" "db_node" {
@@ -63,6 +82,22 @@ resource "hcloud_server" "db_node" {
   depends_on = [
     hcloud_network_subnet.subnet-a
   ]
+
+  user_data = <<EOD
+#cloud-config
+network:
+  version: 2
+  ethernets:
+    enp7s0:
+      dhcp4: false
+      addresses:
+        - 192.168.0.5/28
+      nameservers:
+        addresses: [8.8.8.8]
+      routes:
+        - to: default
+          via: 192.168.0.4
+EOD
 }
 
 output "bastion_ip" {

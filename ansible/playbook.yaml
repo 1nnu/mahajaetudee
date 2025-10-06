@@ -1,3 +1,19 @@
+# - name: Setup bastion host
+#   hosts: _node_type_application
+#   remote_user: root
+#   roles:
+#     - bastion_host
+#   tags: bastion
+#   gather_facts: true
+
+# - name: Setup database host
+#   hosts: _node_type_db
+#   remote_user: root
+#   roles:
+#     - db_host_network_setup
+#   tags: db_host_network
+#   gather_facts: true
+
 - name: Initial setup
   hosts: all
   remote_user: root
@@ -6,7 +22,7 @@
   tags: init
   gather_facts: true
 
-- hosts: _node_type_application
+- hosts: all
   tasks:
     - name: Update packages on public node
       apt:
@@ -14,10 +30,3 @@
         state: present
       become: yes
 
-- hosts: _node_type_db
-  tasks:
-    - name: Update packages on private node
-      apt:
-        name: htop
-        state: present
-      become: yes
