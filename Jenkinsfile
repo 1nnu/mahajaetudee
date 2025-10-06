@@ -63,10 +63,10 @@ pipeline {
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
                             credentialsId: 'private-key-hetzner',
-                            extraVars{
-                                extraVar("BASTION_IP", "$BASTION_IP", false)
-                                extraVar("ansible_ssh_private_key_file", "$SSH_KEY", true)
-                            })
+                            extraVars: [
+                                BASTION_IP: "${BASTION_IP}",
+                                ansible_ssh_private_key_file: "${SSH_KEY}"
+                            ]
                     }
                 }
             }
