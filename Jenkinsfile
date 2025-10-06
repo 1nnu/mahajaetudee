@@ -66,7 +66,7 @@ pipeline {
                             extraVars: [
                                 BASTION_IP: "${BASTION_IP}",
                                 ansible_ssh_private_key_file: "${SSH_KEY}"
-                            ]
+                            ])
                     }
                 }
             }
