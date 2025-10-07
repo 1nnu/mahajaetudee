@@ -25,7 +25,7 @@ resource "hcloud_server" "application_node" {
 
   network {
     network_id = hcloud_network.privateNetwork.id
-    ip         = "192.168.0.1"
+    ip         = "192.168.0.2"
   }
 
   public_net {
@@ -68,7 +68,7 @@ resource "hcloud_server" "db_node" {
 
   network {
     network_id = hcloud_network.privateNetwork.id
-    ip         = "192.168.0.2"
+    ip         = "192.168.0.3"
   }
 
   public_net {
@@ -91,7 +91,7 @@ write_files:
 
       [Network]
       DHCP=yes
-      Gateway=192.168.0.1
+      Gateway=192.168.0.2
     append: true
 
   - path: /etc/systemd/resolved.conf
