@@ -1,4 +1,4 @@
 ansible_user: root
-ansible_host: 192.168.0.5
+ansible_host: 192.168.0.3
 ansible_ssh_common_args: >
   -o ProxyCommand="ssh -i {{ ansible_ssh_private_key_file }} -W %h:%p root@{{ BASTION_IP }}"

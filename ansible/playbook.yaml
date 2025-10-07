@@ -21,12 +21,3 @@
     - init
   tags: init
   gather_facts: true
-
-- hosts: all
-  tasks:
-    - name: Update packages on public node
-      apt:
-        name: htop
-        state: present
-      become: yes
-
