@@ -58,7 +58,8 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: "private-key-hetzner", keyFileVariable: 'SSH_KEY')]) {
                         // For debug purposes
                         // ansible-inventory -i inventory --list
-                        
+                        sh 'sleep 20'
+
                         ansiblePlaybook(
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
