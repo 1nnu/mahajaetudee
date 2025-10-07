@@ -25,7 +25,7 @@ resource "hcloud_server" "application_node" {
 
   network {
     network_id = hcloud_network.privateNetwork.id
-    ip         = "192.168.0.4"
+    ip         = "192.168.0.1"
   }
 
   public_net {
@@ -46,7 +46,7 @@ write_files:
       #!/bin/bash
       
       echo 1 > /proc/sys/net/ipv4/ip_forward
-      iptables -t nat -A POSTROUTING -s '192.168.0.0/28' -o eth0 -j MASQUERADE
+      iptables -t nat -A POSTROUTING -s '192.168.0.0/24' -o eth0 -j MASQUERADE
     permissions: '0755'
 
 runcmd:
@@ -68,7 +68,7 @@ resource "hcloud_server" "db_node" {
 
   network {
     network_id = hcloud_network.privateNetwork.id
-    ip         = "192.168.0.5"
+    ip         = "192.168.0.2"
   }
 
   public_net {
@@ -91,7 +91,7 @@ write_files:
 
       [Network]
       DHCP=yes
-      Gateway=192.168.0.4
+      Gateway=192.168.0.1
     append: true
 
   - path: /etc/systemd/resolved.conf
