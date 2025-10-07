@@ -91,14 +91,13 @@ write_files:
 
       [Network]
       DHCP=yes
-      Gateway=192.168.0.2
+      Gateway=192.168.0.1
     append: true
 
   - path: /etc/systemd/resolved.conf
     content: |
       [Resolve]
-      DNS=185.12.64.2 185.12.64.1
-      FallbackDNS=8.8.8.8
+      DNS=8.8.8.8
     append: true
 
 runcmd:
