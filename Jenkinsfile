@@ -60,6 +60,12 @@ pipeline {
                         // ansible-inventory -i inventory --list
 
                         // Test connetion to private hosts until reachable
+
+                        sh '''
+                        ssh-keygen -R $BASTION_IP || true
+                        ssh-keyscan -H $BASTION_IP >> ~/.ssh/known_hosts
+                        '''
+                        
                         sh '''
                         for i in $(seq 1 20);
                         do
