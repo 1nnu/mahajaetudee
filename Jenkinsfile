@@ -59,6 +59,20 @@ pipeline {
                         // For debug purposes
                         // ansible-inventory -i inventory --list
 
+                        // Test connetion to private hosts until reachable
+                        sh '''
+                        for i in $(seq 1 20);
+                        do
+                            echo "Attempt $i: Trying connection to private network host"
+                            ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$BASTION_IP "ping -c1 192.168.0.3" >/dev/null 2&1
+                            if [ $? -eq 0]; then
+                                echo "Connection successful!"
+                                break
+                            fi
+                            sleep 10
+                        done
+                        '''
+
                         ansiblePlaybook(
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
