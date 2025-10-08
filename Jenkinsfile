@@ -74,7 +74,7 @@ pipeline {
                         '''
 
                         sh '''
-                        ansible-playbook playbook.yaml -i inventory/ -e "BASTION_IP=$BASTION_IP" -e "ansible_ssh_private_key_file=$SSH_KEY"
+                        ansible-playbook playbook.yaml -i inventory/ -e "BASTION_IP=$BASTION_IP" -e "ansible_ssh_private_key_file=$SSH_KEY" -vv
                         '''
 
                         // ansiblePlaybook(
