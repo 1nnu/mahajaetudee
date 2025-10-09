@@ -61,7 +61,6 @@ pipeline {
 
                         sh '''
                         ssh-keygen -R $BASTION_IP || true
-                        ssh-keyscan -H $BASTION_IP >> ~/.ssh/known_hosts
                         '''
                         // Test connetion to private hosts until reachable
                         ansiblePlaybook(
