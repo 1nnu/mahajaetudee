@@ -59,39 +59,30 @@ pipeline {
                         // For debug purposes
                         // ansible-inventory -i inventory --list
 
-                        // Test connetion to private hosts until reachable
-
                         sh '''
                         ssh-keygen -R $BASTION_IP || true
                         ssh-keyscan -H $BASTION_IP >> ~/.ssh/known_hosts
                         '''
-                        
-                        sh '''
-                        for i in $(seq 1 20);
-                        do
-                            echo "Attempt $i: Trying connection to private network host"
-                            ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$BASTION_IP "ping -c1 192.168.0.3" >/dev/null 2>&1 || true
-                            if [ $? -eq 0 ]; then
-                                echo "Connection successful!"
-                                break
-                            fi
-                            sleep 10
-                        done
-                        '''
+                        // Test connetion to private hosts until reachable
+                        ansiblePlaybook(
+                            playbook: 'test_connectivity.yaml',
+                            inventory: 'inventory',
+                            credentialsId: 'private-key-hetzner',
+                            becomeUser: 'root',
+                            extraVars: [
+                                BASTION_IP: "${BASTION_IP}",
+                                ansible_ssh_private_key_file: "${SSH_KEY}"
+                            ])
 
-                        sh '''
-                        ansible-playbook playbook.yaml -i inventory/ -e "BASTION_IP=$BASTION_IP" -e "ansible_ssh_private_key_file=$SSH_KEY" -vv
-                        '''
-
-                        // ansiblePlaybook(
-                        //     playbook: 'playbook.yaml',
-                        //     inventory: 'inventory',
-                        //     credentialsId: 'private-key-hetzner',
-                        //     becomeUser: 'root',
-                        //     extraVars: [
-                        //         BASTION_IP: "${BASTION_IP}",
-                        //         ansible_ssh_private_key_file: "${SSH_KEY}"
-                        //     ])
+                        ansiblePlaybook(
+                            playbook: 'playbook.yaml',
+                            inventory: 'inventory',
+                            credentialsId: 'private-key-hetzner',
+                            becomeUser: 'root',
+                            extraVars: [
+                                BASTION_IP: "${BASTION_IP}",
+                                ansible_ssh_private_key_file: "${SSH_KEY}"
+                            ])
                     }
                 }
             }
