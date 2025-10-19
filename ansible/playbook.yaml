@@ -2,12 +2,18 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Check if host has been connected to before
+      ansible.builtin.stat:
+        path: /cloud_init_has_run
+      register: host_ready
+
     - name: Ensure connectivity
       ansible.builtin.wait_for_connection:
         connect_timeout: 10
         delay: 450 # Wait for cloud init to take effect
         sleep: 10
         timeout: 600
+      when: not host_ready.stat.exists
 
 - name: Initial setup
   hosts: all
