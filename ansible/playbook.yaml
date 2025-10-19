@@ -2,12 +2,12 @@
   hosts: all
   gather_facts: false
   tasks:
-    - name: Ensure connectivity using Ansible Ping with retries
+    - name: Ensure connectivity
       ansible.builtin.wait_for_connection:
         connect_timeout: 10
-        delay: 10
+        delay: 450 # Wait for cloud init to take effect
         sleep: 10
-        timeout: 450
+        timeout: 600
 
 - name: Initial setup
   hosts: all
