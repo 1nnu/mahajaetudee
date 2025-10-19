@@ -1,3 +1,14 @@
+- name: Handle Connection Issues with Retries
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Ensure connectivity using Ansible Ping with retries
+      ansible.builtin.wait_for_connection:
+        connect_timeout: 10
+        delay: 10
+        sleep: 10
+        timeout: 450
+
 - name: Initial setup
   hosts: all
   remote_user: root

@@ -62,17 +62,7 @@ pipeline {
                         sh '''
                         ssh-keygen -R $BASTION_IP || true
                         '''
-                        // Test connetion to private hosts until reachable
-                        ansiblePlaybook(
-                            playbook: 'test_connectivity.yaml',
-                            inventory: 'inventory',
-                            credentialsId: 'private-key-hetzner',
-                            becomeUser: 'root',
-                            extraVars: [
-                                BASTION_IP: "${BASTION_IP}",
-                                ansible_ssh_private_key_file: "${SSH_KEY}"
-                            ])
-
+                        
                         ansiblePlaybook(
                             playbook: 'playbook.yaml',
                             inventory: 'inventory',
