@@ -5,4 +5,4 @@
 - name: Put marker file to specify that server has been connected to already
   ansible.builtin.copy:
     src: cloud_init_has_run
-    dst: /cloud_init_has_run
+    dest: /cloud_init_has_run
