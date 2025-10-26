@@ -1,0 +1,11 @@
+- name: Create a Postgres container
+  community.docker.docker_container:
+    name: database
+    image: postgres:17
+    state: started
+    ports:
+      - "5432:5432"
+    env:
+      POSTGRES_PASSWORD: "mypassword"
+      POSTGRES_USER: "myuser"
+      POSTGRES_DB: "mydatabase"
