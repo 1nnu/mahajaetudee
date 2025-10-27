@@ -56,11 +56,13 @@ pipeline {
             steps {
                 dir('ansible') {
                     withCredentials([sshUserPrivateKey(credentialsId: "private-key-hetzner", keyFileVariable: 'SSH_KEY')]) {
-                        // For debug purposes
-                        // ansible-inventory -i inventory --list
 
                         sh '''
                         ssh-keygen -R $BASTION_IP || true
+                        '''
+
+                        sh '''
+                        ansible-galaxy install -r requirements.yaml
                         '''
                         
                         ansiblePlaybook(
