@@ -55,7 +55,10 @@ pipeline {
             }
             steps {
                 dir('ansible') {
-                    withCredentials([sshUserPrivateKey(credentialsId: "private-key-hetzner", keyFileVariable: 'SSH_KEY')]) {
+                    withCredentials([
+                        sshUserPrivateKey(credentialsId: "private-key-hetzner", keyFileVariable: 'SSH_KEY'),
+                        file(credentialsId: "ansible-vault-password", variable: "ANSIBLE_VAULT_PASSWORD_FILE")
+                    ]) {
 
                         sh '''
                         ssh-keygen -R $BASTION_IP || true
