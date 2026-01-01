@@ -1,8 +1,17 @@
+- name: Create a database volume
+  community.docker.docker_volume:
+    name: postgresql_data
+    state: present
+
 - name: Create a Postgres container
   community.docker.docker_container:
     name: database
-    image: postgres:18
+    image: postgres:17
     state: started
+    mounts:
+      - type: volume
+        source: postgresql_data
+        target: /var/lib/postgresql/data
     ports:
       - "5432:5432"
     env:

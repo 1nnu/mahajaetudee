@@ -6,7 +6,7 @@
       ansible.builtin.wait_for_connection:
         delay: 5
         sleep: 5
-        timeout: 30
+        timeout: 300
       
     - name: Check if host has been connected to before
       ansible.builtin.stat:
