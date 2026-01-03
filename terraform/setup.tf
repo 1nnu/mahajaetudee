@@ -4,7 +4,7 @@ locals {
     instances_settings = {
         location    = "hel1"
         datacenter  = "hel1-dc2"
-        server_type = "cx22"
+        server_type = "cx23"
         os_type     = "ubuntu-24.04"
     }
     aws_settings = {
