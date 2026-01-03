@@ -52,6 +52,7 @@ pipeline {
         stage("Execute Ansible") {
             environment {
                 HCLOUD_TOKEN = credentials('HETZNER_API_TOKEN')
+                ANSIBLE_HOST_KEY_CHECKING="False"
             }
             steps {
                 dir('ansible') {
