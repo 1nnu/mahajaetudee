@@ -2,8 +2,9 @@ ansible_user: root
 
 # POSTGRES
 
+pg_version: "17"
 database_user: mahajaetud
-database_db: mahajaetud
+database_name: mahajaetud
 database_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           39623731356138623838646632356431376630336133323963663635313365376637346537663239

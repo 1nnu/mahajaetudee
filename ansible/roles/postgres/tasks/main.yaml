@@ -3,6 +3,11 @@
     name: postgresql_data
     state: present
 
+- name: Creates a directory for storing backups
+  ansible.builtin.file:
+    path: /backups/postgres
+    state: directory
+
 - name: Create a Postgres container
   community.docker.docker_container:
     name: database
@@ -12,6 +17,11 @@
       - type: volume
         source: postgresql_data
         target: /var/lib/postgresql/data
+      - type: bind
+        read_only: false
+        propagation: shared
+        source: /backups/postgres
+        target: /backups
     ports:
       - "5432:5432"
     env:

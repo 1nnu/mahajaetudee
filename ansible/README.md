@@ -15,4 +15,4 @@ ansible all -m debug -a "var=vars all" -i inventory/ -e "BASTION_IP={IP_ADDRESS}
 
 SSH through bastion
 
-ssh root@{BASTION_IP} -i ~/.ssh/jenkins -o StrictHostKeyChecking=no -o ProxyCommand="ssh -i ~/.ssh/jenkins -o StrictHostKeyChecking=no -W %h:%p root@{PRIVATE_HOST_IP}"
+ssh root@{PRIVATE_HOST_IP} -i ~/.ssh/jenkins -o StrictHostKeyChecking=no -o ProxyCommand="ssh -i ~/.ssh/jenkins -o StrictHostKeyChecking=no -W %h:%p root@{BASTION_IP}"
