@@ -50,6 +50,14 @@
     group: root
     mode: '0400'
 
+- name: Template backup script
+  ansible.builtin.template:
+    src: backup-postgres.sh.j2
+    dest: /root/backup-postgres.sh
+    owner: root
+    group: root
+    mode: '0500'
+
 - name: Creates a cron file under /etc/cron.d for nightly database backups
   ansible.builtin.cron:
     name: backup postgres
