@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Create a dump of the database to the bind mount
+docker exec -t 718823c8603a pg_dumpall -c -U {{ database_user }} > /backups/dump.sql
+
+# Launch an aws-cli container to send to backup to S3
+docker run --rm -ti -v /root/.aws:/root/.aws -v /backups/postgres:/root/backups amazon/aws-cli s3 cp /root/backups/dump.sql {{ aws_s3_bucket_arn }}/test.sql

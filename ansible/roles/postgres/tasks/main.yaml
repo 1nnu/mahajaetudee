@@ -28,3 +28,24 @@
       POSTGRES_PASSWORD: "{{ database_password }}"
       POSTGRES_USER: "{{ database_user }}"
       POSTGRES_DB: "{{ database_name }}"
+
+- name: Creates a directory for aws info
+  ansible.builtin.file:
+    path: /root/.aws
+    state: directory
+
+- name: Template aws credentials
+  ansible.builtin.template:
+    src: aws-credentials.j2
+    dest: /root/.aws/aws-credentials
+    owner: root
+    group: root
+    mode: '0400'
+
+- name: Template aws config file
+  ansible.builtin.template:
+    src: aws-config.j2
+    dest: /root/.aws/aws-config
+    owner: root
+    group: root
+    mode: '0400'
