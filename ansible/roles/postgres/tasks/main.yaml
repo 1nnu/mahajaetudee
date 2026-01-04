@@ -37,7 +37,7 @@
 - name: Template aws credentials
   ansible.builtin.template:
     src: aws-credentials.j2
-    dest: /root/.aws/aws-credentials
+    dest: /root/.aws/credentials
     owner: root
     group: root
     mode: '0400'
@@ -45,7 +45,17 @@
 - name: Template aws config file
   ansible.builtin.template:
     src: aws-config.j2
-    dest: /root/.aws/aws-config
+    dest: /root/.aws/config
     owner: root
     group: root
     mode: '0400'
+
+- name: Creates a cron file under /etc/cron.d for nightly database backups
+  ansible.builtin.cron:
+    name: backup postgres
+    weekday: "*"
+    minute: "0"
+    hour: "0"
+    user: root
+    job: "/bin/bash /root/backup-postgres.sh"
+    cron_file: postgres-backup

@@ -31,4 +31,4 @@ aws_secret_access_key: !vault |
           39663364653732646163663466383631366565633463626537393338623366363061383738663865
           6332343263316237653932376262343664363836633362636139
 
-aws_s3_bucket_arn: s3://terraform-s3-state-viiin/postgres-backups/
+aws_s3_bucket_uri: s3://terraform-s3-state-viiin/postgres-backups/
